@@ -2,26 +2,35 @@ POST  http://localhost:3000/events
 Content-Type: application/json
 
 {
-  "title":"summd",
+  "title":2,
   "details":"um evento para quem gosta de frio",
-  "maximumAttendees":1
+  "maximumAttendees":5
 }
 
 ###
 
-POST  http://localhost:3000/events/26fb56f8-c96f-4b54-b22f-e7a20389a835/attendees
+POST  http://localhost:3000/events/0e3905ec-9bac-42ab-9e0b-f4413cc754f9/attendees
 Content-Type: application/json
 
 {
-  "name":"felipe",
-  "email":"felipelkjl@hotmail.com"
+  "name":"usuario teste 2",
+  "email":"teste@hotmail.com"
 }
 
 ###
 
-GET   http://localhost:3000/events/c1ff5a3b-8c98-4b10-97ce-4f288d28e19c
+GET   http://localhost:3000/events/0e3905ec-9bac-42ab-9e0b-f4413cc754f9
 
 
 ###
 
-GET   http://localhost:3000/attendees/2/badge
+GET   http://localhost:3000/attendees/8/badge
+###
+
+
+GET   http://localhost:3000/attendees/8/check-in
+
+
+###
+
+GET   http://localhost:3000/events/0e3905ec-9bac-42ab-9e0b-f4413cc754f9/attendees?pageIndex=0

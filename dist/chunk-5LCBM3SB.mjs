@@ -1,16 +1,19 @@
-import { FastifyInstance } from 'fastify'
-import { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
-import { db } from '../lib/prisma'
-import { BadRequest } from './_errors/bad-request'
+import {
+  BadRequest
+} from "./chunk-K352R5CC.mjs";
+import {
+  db
+} from "./chunk-QBI5SRMV.mjs";
 
-export async function registerForEvent(app: FastifyInstance) {
-  app.withTypeProvider<ZodTypeProvider>().post(
-    '/events/:eventId/attendees',
+// api/src/routes/register-for-event.ts
+import { z } from "zod";
+async function registerForEvent(app) {
+  app.withTypeProvider().post(
+    "/events/:eventId/attendees",
     {
       schema: {
-        summary: 'Register an attendee',
-        tags: ['attendees'],
+        summary: "Register an attendee",
+        tags: ["attendees"],
         body: z.object({
           name: z.string().min(4),
           email: z.string().email()
@@ -26,9 +29,8 @@ export async function registerForEvent(app: FastifyInstance) {
       }
     },
     async (req, reply) => {
-      const { email, name } = req.body
-      const { eventId } = req.params
-
+      const { email, name } = req.body;
+      const { eventId } = req.params;
       const [event, attendeeFromEmail] = await Promise.all([
         db.event.findUnique({
           where: {
@@ -43,25 +45,19 @@ export async function registerForEvent(app: FastifyInstance) {
             }
           }
         })
-      ])
-
+      ]);
       if (attendeeFromEmail != null) {
-        throw new Error('Email ja registrado para este evento.')
+        throw new Error("Email ja registrado para este evento.");
       }
-
       const amountOfAttendeesForEvent = await db.attendee.count({
         where: {
           eventId
         }
-      })
-
-      if (
-        event?.maximumAttendees &&
-        amountOfAttendeesForEvent >= event?.maximumAttendees
-      ) {
+      });
+      if (event?.maximumAttendees && amountOfAttendeesForEvent >= event?.maximumAttendees) {
         throw new BadRequest(
-          'Numero máximo de participantes registrado para este evento ja alcançado'
-        )
+          "Numero m\xE1ximo de participantes registrado para este evento ja alcan\xE7ado"
+        );
       }
       const attendee = await db.attendee.create({
         data: {
@@ -69,9 +65,12 @@ export async function registerForEvent(app: FastifyInstance) {
           email,
           eventId
         }
-      })
-
-      return reply.status(201).send({ attendeesId: attendee.id })
+      });
+      return reply.status(201).send({ attendeesId: attendee.id });
     }
-  )
+  );
 }
+
+export {
+  registerForEvent
+};

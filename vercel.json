@@ -1,10 +1,11 @@
 {
+   "outputDirectory": "dist",
+  "public": true,
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/api/src/server.ts"
+      "destination": "/api/src/server"
     }
-  ],
-  "excludeFiles":["./node_modules"]
+  ]
   
 }

@@ -1,16 +1,19 @@
-import { FastifyInstance } from 'fastify'
-import { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
-import { db } from '../lib/prisma'
-import { BadRequest } from './_errors/bad-request'
+import {
+  BadRequest
+} from "./chunk-K352R5CC.mjs";
+import {
+  db
+} from "./chunk-QBI5SRMV.mjs";
 
-export async function getAttendeeBadge(app: FastifyInstance) {
-  app.withTypeProvider<ZodTypeProvider>().get(
-    '/attendees/:attendeeId/badge',
+// api/src/routes/get-attendee-badge.ts
+import { z } from "zod";
+async function getAttendeeBadge(app) {
+  app.withTypeProvider().get(
+    "/attendees/:attendeeId/badge",
     {
       schema: {
-        summary: 'Get an attendee badge',
-        tags: ['attendees'],
+        summary: "Get an attendee badge",
+        tags: ["attendees"],
         params: z.object({
           attendeeId: z.coerce.number().int()
         }),
@@ -27,8 +30,7 @@ export async function getAttendeeBadge(app: FastifyInstance) {
       }
     },
     async (req, reply) => {
-      const { attendeeId } = req.params
-
+      const { attendeeId } = req.params;
       const attendee = await db.attendee.findUnique({
         select: {
           name: true,
@@ -40,14 +42,12 @@ export async function getAttendeeBadge(app: FastifyInstance) {
           }
         },
         where: { id: attendeeId }
-      })
-
+      });
       if (attendee === null) {
-        throw new BadRequest('Participante não encontrado')
+        throw new BadRequest("Participante n\xE3o encontrado");
       }
-      const baseUrl = `${req.protocol}://${req.hostname}`
-      const checkInUrl = new URL(`/attendee/${attendeeId}/check-in`, baseUrl)
-
+      const baseUrl = `${req.protocol}://${req.hostname}`;
+      const checkInUrl = new URL(`/attendee/${attendeeId}/check-in`, baseUrl);
       return reply.send({
         badge: {
           name: attendee.name,
@@ -55,7 +55,11 @@ export async function getAttendeeBadge(app: FastifyInstance) {
           eventTitle: attendee.event.title,
           checkInUrl: checkInUrl.toString()
         }
-      })
+      });
     }
-  )
+  );
 }
+
+export {
+  getAttendeeBadge
+};

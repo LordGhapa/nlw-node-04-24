@@ -6,18 +6,30 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch api/src/server.ts",
-    "prepare": "prisma generate"
+    "start": "node dist/src/server.mjs",
+    "build": "tsup api --format esm",
+    "prepare": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "devDependencies": {
     "@types/node": "^20.12.7",
     "prisma": "^5.12.1",
+    "tsup": "^8.0.2",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@fastify/cors": "^9.0.1",
+    "@fastify/swagger": "^8.14.0",
+    "@fastify/swagger-ui": "^3.0.0",
     "@prisma/client": "5.12.1",
     "fastify": "^4.26.2",
     "fastify-type-provider-zod": "^1.1.9",
