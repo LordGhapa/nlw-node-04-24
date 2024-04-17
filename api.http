@@ -33,7 +33,7 @@ GET   http://localhost:3000/attendees/8/check-in
 
 ###
 
-GET   http://localhost:3000/events/0e3905ec-9bac-42ab-9e0b-f4413cc754f9/attendees?pageIndex=0
+GET   http://localhost:3000/events/9e9bd979-9d10-4915-b339-3786b1634f33/attendees?pageIndex=0&query=mille
 
 ###
 
